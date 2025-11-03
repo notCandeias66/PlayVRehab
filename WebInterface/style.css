@@ -1,0 +1,384 @@
+/* Apply box-sizing globally */
+* {
+    box-sizing: border-box;
+}
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    /*background-image: url('images/main_background.jpg');*/
+    background-image: url(images/dark_main_menu_background.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #dbdbdb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0, 0, 0, 0.05); */
+    background-color: rgba(0, 0, 0, 0.05);
+    z-index: -1;
+}
+
+/* Container for the form */
+.form {
+    background-color: rgba(34, 34, 34, 0.9);
+    padding: 20px; /* Keep this padding for the form */
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 550px;
+    text-align: center;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"], 
+input[type="password"] {
+    width: 95%; /* Make sure all input fields take full width */
+    padding: 10px;
+    margin: 10px 0; /* Space between inputs */
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #333;
+    color: #f0f0f0;
+    font-size: 16px;
+}
+
+/* Hide number input spinner arrows */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: none;
+}
+
+/* Container for all elements on same line */
+.inputs-row {
+    display: flex;
+    align-items: center; /* Vertically center all items */
+    gap: 20px; /* Space between elements */
+    margin: 12px;
+}
+
+/* Input with unit styling */
+.input-with-unit {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto; /* Don't grow or shrink */
+}
+
+.input-with-unit input {
+    width: 80px;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #333;
+    color: #f0f0f0;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-right: 5px; /* Just space before unit */
+    margin-top: 5px;
+}
+
+.input-with-unit .unit {
+    color: #ddd;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.bmi-container {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between BMI elements */
+    min-width: 200px; /* Minimum width to prevent shifting */
+    flex: 1; /* Take remaining space */
+}
+
+.bmi-container label {
+    flex-shrink: 0; /* Don't shrink the "BMI:" label */
+}
+
+#bmi-value {
+    flex-shrink: 0; /* Don't shrink the BMI number */
+    min-width: 30px; /* Reserve space for BMI value */
+    text-align: left;
+}
+
+#bmi-category {
+    flex: 1; /* Take remaining space */
+    text-align: left; /* Start from left, don't center */
+    white-space: nowrap; /* Keep category text on one line */
+}
+/* Password container for input and icon */
+.password-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 12px;
+}
+
+.toggle-icon {
+    margin: 0px 18px 0 8px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;    
+}
+
+/* Flex container for inline select fields */
+.inline-fields {
+    display: flex;
+    justify-content: space-between; /* Space between the two select fields */
+    align-items: center;
+    width: 100px; /* Full width for the inline select fields container */
+    margin: 10px 0; /* Same margin as input fields */
+}
+
+/* Custom styles for the select dropdown */
+select {
+    width: 250px; /* Adjust to keep both selects at 48% so they fit side by side */
+    padding: 10px; /* Same padding as input fields */
+    margin: 0px 12px; /* Maintain same vertical spacing as inputs */
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #333;
+    color: #f0f0f0;
+    font-size: 16px;
+    appearance: none; /* Remove default dropdown styling */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5"><polygon points="0,0 10,0 5,5" fill="%2300aeff"/></svg>'); /* Custom arrow icon */
+    background-repeat: no-repeat; /* Do not repeat the background */
+    background-position: right 10px center; /* Position the custom arrow */
+    padding-right: 30px; /* Add padding for the custom arrow */
+}
+
+/* Button Styles */
+button {
+    /*background-color: #BF8F0F;*/
+    background-color: #00aeff;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 95%; /* Width from form border */
+    margin: 10px 10px; /* Space above and below the button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+button:hover {
+    /*background-color: #BF8F0F;*/
+    background-color: #57c9fe; /* Button hover effect */
+    color: #111; /* Button text color */
+}
+
+/* Link colors */
+.a_link_blue {
+    color: #00aeff; /* Link color */
+    text-decoration: none; /* No underline */
+    text-align: center;
+    display: block;
+    margin: auto auto;
+    width: fit-content;
+}
+
+.a_link_blue_no_center {
+    /*color: #BF8F0F;*/
+    color: #00aeff; /* Link color */
+    text-decoration: none; /* No underline */
+    margin: 10px 0;
+}
+
+.a_link_white {
+    color: #f0f0f0; /* Link color */
+    text-decoration: none; /* No underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+h1 {
+    /*color: #BF8F0F;*/
+    color: #00aeff; /* Heading color */
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.p_10px {
+    color: #f0f0f0; /* Paragraph color */
+    margin: 10px;
+}
+
+p {
+    color: #f0f0f0; /* Paragraph color */
+}
+
+/* Option Styles */
+option {
+    background-color: #333; /* Match the background with input fields */
+}
+
+/* Styles for the physio selection dropdown */
+#physio-selection {
+    display: none; /* Initially hidden */
+}
+
+/* Container for the form */
+.homepage_base {
+    background-color: rgba(34, 34, 34, 0.9);
+    padding: 20px; /* Keep this padding for the homepage */
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 98%;
+    min-height: 95vh;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    scroll-behavior: auto;
+}
+
+/* Physios table */
+#physiosAndPatients {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#physiosAndPatients td, #physiosAndPatients th {
+    border: 1px solid #111;
+    padding: 8px;
+}
+
+#physiosAndPatients tr:nth-of-type(odd) td {
+    background-color: #444; /* Background for odd rows */
+}
+
+/* Apply hover effect to the whole row */
+#physiosAndPatients tr:hover {
+    color: #f0f0f0;
+}
+
+/* Header styling with no background */
+#physiosAndPatients th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    /*color: #BF8F0F;*/
+    color: #00aeff;
+    text-align: left;
+}
+
+.new_level_select {
+    width: 95%;
+    margin: 10px;
+    padding: 10px;
+}
+
+.textarea {
+    min-height: 60px;
+    max-height: 300px; /* Optional: Prevents excessive growth */
+    resize: none; /* Prevents manual resizing */
+    overflow-y: hidden; /* Hides scrollbar */
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #333;
+    color: white;
+    outline: none;
+    font-size: 14px;
+    margin: 10px;
+}
+
+/* Style the qr code button */
+.qrcode_btn {
+    width: 15%; /* Width from form border */
+}
+
+/* Container to split left/right */
+.observations_container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 40px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Half containers for left and right sides */
+.observations_container_half {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+    background-color: rgba(34, 34, 34, 0.85);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Obstacles + Collapsable syntax */
+.example-string {
+  font-family: monospace;
+  color: #BF8F0F;
+  padding: 5px;
+  margin: 10px;
+}
+
+.collapsible {
+  background-color: #2a2a2a;
+  color: #00aeff;
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  outline: none;
+  font-size: 1rem;
+  margin: 5px 10px 0px; /*top/right/botton/left*/
+  transition: background-color 0.3s ease;
+}
+
+.collapsible.active {
+  background-color: #00aeff;
+  color: #2a2a2a;
+}
+
+.content {
+  background-color: #1b1b1b;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  border-left: 2px solid #00aeff;
+  margin: 10px;
+}
+
+.content ul {
+  margin: 10px;
+}
+
+.content li {
+  margin-bottom: 8px;
+  color: #ddd;
+}
+
+/* Level string feedback */
+.level_string_feedback {
+    margin: 0 10px;
+}

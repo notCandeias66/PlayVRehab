@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Link to the CSS file -->
+        <title>Sign Up</title>
+    </head>
+    <body>
+        <div class="overlay"></div> <!-- Overlay to reduce brightness -->
+
+        <form action="/sign_up" method="POST" class="form">
+            <h1>Welcome to PlayVRehab!</h1>
+
+            <!-- Input for name -->
+            <input type="text" id="name" placeholder="Name" name="name" required><br>
+
+            <!-- Input for email -->
+            <input type="email" id="email" placeholder="Email" name="email" required><br>
+
+            <!-- Input for password -->
+            <div class="password-container">
+                <input type="password" id="password" class="icon-rtl" placeholder="Password" name="password" required>
+                <img id="toggle-icon" src="{{ url_for('static', filename='images/hide_password.png') }}" 
+                    alt="Toggle Visibility" class="toggle-icon" onclick="togglePassword()">
+            </div>
+
+            <!-- Role selection dropdown for Admins -->
+            {% if role == 'admin' %} <!-- Show role selection only for Admins -->
+                <div class="inline-fields">
+                    <!-- Role selection dropdown -->
+                    <select id="role" name="role" required onchange="handleRoleChange()">
+                        <option value="" disabled selected>Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="physio">Physio</option>
+                        <option value="patient">Patient</option>
+                    </select>
+
+                    <!-- Physio selection (hidden initially, shown for 'Patient') -->
+                    <div id="physio-selection" style="display: none; flex: 1;">
+                        <select id="physio" name="physio" required>
+                            <option value="" disabled selected>Physio</option>
+                            {% for physio in physios %}
+                                <option value="{{ physio.id }}">{{ physio.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Role selection dropdown for Physios -->
+            {% if role == 'physio' %} <!-- Show role selection only for Physios -->
+                <div class="inline-fields">
+                    <!-- Role selection dropdown (only allow creating patients) -->
+                    <select id="role" name="role" required>
+                        <option value="patient">Patient</option> <!-- Physio can only create patients -->
+                    </select>
+
+                    <!-- Physio selection (always visible for physios) -->
+                    <select id="physio" name="physio">
+                        <option value="" selected>Physio (optional)</option>
+                        {% for physio in physios %}
+                            <option value="{{ physio.id }}">{{ physio.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+            <!-- Patient-specific fields (height, weight, BMI) -->
+            <div id="patient-fields" style="display: none;">
+                <div class="inputs-row">
+                    <div class="input-with-unit">
+                        <input type="number" id="height" placeholder="Height" name="height" required step="0.01" min="0.01" max="3.00">
+                        <span class="unit">m</span>
+                    </div>
+                    
+                    <div class="input-with-unit">
+                        <input type="number" id="weight" placeholder="Weight" name="weight" step="0.1" min="0.1" max="300.0" required>
+                        <span class="unit">kg</span>
+                    </div>
+                    
+                    <!-- BMI Display - now in the same row -->
+                    <div class="bmi-container">
+                        <label for="bmi">BMI:</label>
+                        <span id="bmi-value">-</span>
+                        <span id="bmi-category"></span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">Sign Up</button>
+
+            <!-- Links on the same line -->
+            <a class="a_link_blue" href="/homepage">Back to Homepage</a>
+        </form>
+
+        <!-- Link to external JavaScript file -->
+        <script src="{{ url_for('static', filename='functions.js') }}"></script>
+
+    </body>
+</html>

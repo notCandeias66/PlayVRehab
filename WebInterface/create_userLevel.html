@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Create Level</title>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <form action="/create_userLevel" method="POST" class="form">
+        <h1>Create a New User Level</h1>
+
+        <select name="patient_id" id="patient_id" class="new_level_select" required>
+            <option value="">Select a patient</option>
+            {% for patient in patients %}
+                <option value="{{ patient.id }}">{{ patient.name }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="level_id" id="level_id" class="new_level_select" required>
+            <option value="">Select a level</option>
+            {% for level in levels %}
+                <option value="{{ level.id }}">Level {{ level.id }} - {{ level.description }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- <textarea id="level_params" name="level_params" class="textarea" placeholder="Describe level settings..." required></textarea>
+        Call the auto-expand function for this page
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                enableAutoExpandTextarea("#level_params");
+            });
+        </script> -->
+
+        <button type="submit">Create User Level</button>
+
+        <a class="a_link_blue" href="/homepage">Back to Homepage</a>
+    </form>
+
+    <!-- Link to external JavaScript file -->
+    <script src="{{ url_for('static', filename='functions.js') }}"></script>
+
+    
+</body>
+</html>

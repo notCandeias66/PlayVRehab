@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Link to the CSS file -->
+    <title>Login</title>
+</head>
+<body>
+    <div class="overlay"></div> <!-- Overlay to reduce brightness -->
+
+    <form action="/login" method="POST" class="form">
+        <h1>Welcome back to PlayVRehab!</h1>
+
+        <!-- Input for email -->
+        <input type="email" id="email" placeholder="Email" name="email" required><br>
+
+        <!-- Input for password -->
+        <div class="password-container">
+            <input type="password" id="password" class="icon-rtl" placeholder="Password" name="password" required>
+            <img id="toggle-icon" src="{{ url_for('static', filename='images/hide_password.png') }}" 
+                alt="Toggle Visibility" class="toggle-icon" onclick="togglePassword()">
+        </div>
+
+        <button type="submit">Login</button>
+
+        <!-- Links on the same line -->
+        <div class="links">
+            
+        </div>
+        <p class="links"><a class="a_link_blue" href="/">Back to Home</a></p>
+
+        <!-- Link to external JavaScript file -->
+        <script src="{{ url_for('static', filename='functions.js') }}"></script>
+    </form>
+</body>
+</html>

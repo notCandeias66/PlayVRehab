@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Create New Level</title>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="observations_container">
+
+        <!-- Left side: evel Creator Syntax -->
+        <div class="observations_container_half">
+            <h1>Level Creator Syntax</h1>
+
+            <p class="example-string"><strong>Example:</strong> <code>!,CR,LHLL3,GND,BS,GND,CR,LHLR3,GND,BS</code></p>
+
+            <div id="collapsable">
+                <button class="collapsible">Spawn</button>
+                <div class="content">
+                    <ul>
+                        <li><code>!</code> - Spawn Point</li>
+                    </ul>
+                </div>
+
+                <button class="collapsible">Basic Moves</button>
+                <div class="content">
+                    <ul>
+                        <li><code>CL</code> - Crouch Left</li>
+                        <li><code>CM</code> - Crouch Middle</li>
+                        <li><code>CR</code> - Crouch Right</li>
+                        <li><code>JL</code> - Jump Left</li>
+                        <li><code>JM</code> - Jump Middle</li>
+                        <li><code>JR</code> - Jump Right</li>
+                    </ul>
+                </div>
+
+                <button class="collapsible">Time Related Moves</button>
+                <div class="content">
+                    <ul>
+                        <li><code>LHLLX</code> - Left Leg, Left Side, X seconds</li>
+                        <li><code>LHLMX</code> - Left Leg, Middle, X seconds</li>
+                        <li><code>LHLRX</code> - Left Leg, Right Side, X seconds</li>
+                        <li><code>LHRLX</code> - Right Leg, Left Side, X seconds</li>
+                        <li><code>LHRMX</code> - Right Leg, Middle, X seconds</li>
+                        <li><code>LHRRX</code> - Right Leg, Right Side, X seconds</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right side: Level Creation -->
+        <div class="observations_container_half">
+            <h1>Level Creation</h1>
+
+            <form method="POST" action="/new_level"> <!--action="/new_level"-->
+                <!-- Input for level string -->
+                <textarea id="level_string" name="level_string" class="textarea" placeholder="Level corresponding string" required></textarea>
+                <div class="level_string_feedback" id="level_string_feedback"></div>
+
+                <br>
+
+                <!-- Input for level description -->
+                <textarea id="level_description" name="level_description" class="textarea" placeholder="Level description" required></textarea>
+
+                <button id="submit_level_btn" type="submit">Create Level</button>
+
+                <a class="a_link_blue" href="/homepage" style="text-align: center;">Back to Homepage</a>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Link to external JavaScript file -->
+    <script src="{{ url_for('static', filename='functions.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            enableAutoExpandTextarea("#level_description");
+            setupCollapsibles("#collapsable");
+            setupLevelStringValidation("#level_string", "#level_string_feedback", "#submit_level_btn");
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>View Patient</title>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="homepage_base">
+
+        <h1>Patient Information</h1>
+
+        <p>This is the page of {{ patient['name'] }}.</p>
+
+        <p>Email: {{ patient.email }}</p>
+
+        <p>Weight (kg): {{ patient.weightX10 / 10 }} | Height (m): {{ "%.2f"|format(patient.heightX100 / 100) }} | BMI: {{ patient.bmiX10 / 10 }} | BMI class: {{ patient.bmi_class }}</p>
+        
+        <!-- Display User Levels in a table -->
+        <h2>User Levels</h2>
+
+        {% if userLevels %}
+            <table border="1" id="physiosAndPatients">
+                <thead>
+                    <tr>
+                        <th>Level #</th>
+                        <th>Attempt #</th>
+                        <th>Parameters</th>
+                        <th>Score</th>
+                        <th>Time Taken</th>
+                        <th>Status</th>
+                        <th>Game Results</th>
+                        <th>Observations</th>
+                        <th>Progession</th>
+                        <!-- <th>Level String</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for userLevel in userLevels %}
+                        <tr>
+                            <td>{{ userLevel['level_id'] }}</td>
+                            <td>{{ userLevel['attempt'] }}</td>
+                            <td>{{ userLevel['parameters']}}</td>
+                            <td>{{ userLevel['score'] }}</td>
+                            <td>
+                                {% if userLevel['time_taken'] == -1 %}
+                                    None
+                                {% else %}
+                                    {% set minutes = userLevel['time_taken'] // 60 %}
+                                    {% set seconds = userLevel['time_taken'] % 60 %}
+                                    
+                                    {% if minutes == 0 %}
+                                        0 min {{ seconds }} s
+                                    {% else %}
+                                        {{ minutes }} min {{ seconds }} s
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>{{ userLevel['status'] }}</td>
+                            <td>{{ userLevel['game_results'] }}</td>
+                            <td>
+                                {{ userLevel['observations'] }} 
+                                <br>
+                                <a class="a_link_blue_no_center" href="/edit_observations/{{ userLevel['user_id'] }}/{{ userLevel['level_id'] }}/{{ userLevel['attempt'] }}">Edit</a>
+                            </td>
+                            <td>{{ userLevel['progress_percent'] }}%</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+            <p>No levels for this patient!</p>
+        {% endif %}
+        <br>
+
+        <a class="a_link_blue_no_center" href="/homepage">Back to Homepage</a>
+
+    </div>
+
+</body>
+</html>

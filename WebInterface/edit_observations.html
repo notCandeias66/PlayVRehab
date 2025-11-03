@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Edit Observations</title>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="observations_container">
+        <!-- Left side: Game Results -->
+        <div class="observations_container_half">
+            <h2>Game Results</h2>
+            <p class="p_10px" style="white-space: pre-line;">{{ user_level['game_results'] }}</p>
+        </div>
+
+        <!-- Right side: Editable Observations -->
+        <div class="observations_container_half">
+            <h1>Edit Observations</h1>
+
+            <form method="POST" action="">
+                <textarea id="observations" name="observations" class="textarea" placeholder="Write your observations..." required>{{ user_level['observations'] }}</textarea>
+                <br>
+                <button type="submit">Save</button>
+                <a class="a_link_blue" href="/patient_detail/{{ user_level['user_id'] }}">Cancel</a>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Link to external JavaScript file -->
+    <script src="{{ url_for('static', filename='functions.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            enableAutoExpandTextarea("#observations");
+        });
+    </script>
+
+    
+</body>
+</html>

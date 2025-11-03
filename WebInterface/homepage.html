@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Home - PlayVRehab</title>
+</head>
+<body onload="attachQRCodeListener()">
+    <div class="overlay"></div>
+
+    <div class="homepage_base">
+
+        <h1>Welcome to PlayVRehab</h1>
+
+        <p>You are logged in as {{ role }}.</p>
+
+        <p>Name: {{ user.name }} | Email: {{ user.email }}</p>
+
+        {% if role == 'patient' %}
+            <p>Weight (kg): {{ user.weightX10 / 10 }} | Height (m): {{ "%.2f"|format(user.heightX100 / 100) }} | BMI: {{ user.bmiX10 / 10 }} | BMI class: {{ user.bmi_class }}</p>
+        {% endif %}
+
+        {% if role == 'admin' or role == 'physio' %}
+
+            <a class="a_link_blue_no_center" href="/sign_up">New User</a> <!-- Admins and Physios can create users -->
+            |
+            <a class="a_link_blue_no_center" href="/new_level">New Level</a>
+            |
+            <a class="a_link_blue_no_center" href="/create_userLevel">New Patient Level</a>
+
+
+            {% if role == 'admin' %}
+                <h2>All Physios</h2>
+                <table border="1" id="physiosAndPatients">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th style="text-align: center;">Actions</th> <!-- Actions column for View link -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for physio in physios %}
+                            <tr>
+                                <td>{{ physio.name }}</td>
+                                <td>{{ physio.email }}</td>
+                                <td style="text-align: center;"><a class="a_link_blue" href="/physio_detail/{{ physio.id }}">View</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table> <br>
+            {% endif %}
+
+            {% if role == 'admin' %}
+                <h2>All Patients</h2>
+            {% elif role == 'physio' %}
+                <h2>My Patients</h2>
+            {% endif %}
+            <!-- Display all Patients in a table -->
+            <table border="1" id="physiosAndPatients">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Weight (kg)</th>
+                        <th>Height (m)</th>
+                        <th>BMI</th>
+                        <th>BMI Class</th>
+                        {% if role == 'admin' %}
+                            <th>Assigned Physio</th>
+                        {% endif %}
+                        <th style="text-align: center;">Actions</th> <!-- Actions column for View link -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                        <tr>
+                            <td>{{ patient.name }}</td>
+                            <td>{{ patient.email }}</td>
+                            <td>{{ patient.weightX10 / 10 }}</td>
+                            <td>{{ "%.2f"|format(patient.heightX100 / 100) }}</td>
+                            <td>{{ patient.bmiX10 / 10 }}</td>
+                            <td>{{ patient.bmi_class }}</td>
+                            {% if role == 'admin' %}
+                                <td>
+                                    {% if patient.physio_id %}
+                                        {% for physio in physios %}
+                                            {% if physio.id == patient.physio_id %}
+                                                {{ physio.name }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        Unassigned
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                            <td style="text-align: center;"><a class="a_link_blue" href="/patient_detail/{{ patient.id }}">View</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> <br>
+
+            <h2>All Levels</h2>
+            <table border="1" id="physiosAndPatients">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Level String</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for level in levels %}
+                        <tr>
+                            <td>{{ level.id }}</td>
+                            <td>{{ level.level_string }}</td>
+                            <td>{{ level.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> <br>
+        {% endif %}
+
+        {% if role == 'patient' %}
+
+            <h2>My Levels</h2>
+
+            {% if userLevels %}
+                <table border="1" id="physiosAndPatients">
+                    <thead>
+                        <tr>
+                            <th>Level #</th>
+                            <th>Attempt #</th>
+                            <th>Parameters</th>
+                            <th>Score</th>
+                            <th>Time Taken</th>
+                            <th>Status</th>
+                            <th>Game Results</th>
+                            <th>Observations</th>
+                            <th>Progression</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for userLevel in userLevels %}
+                            <tr>
+                                <td>{{ userLevel['level_id'] }}</td>
+                                <td>{{ userLevel['attempt'] }}</td>
+                                <td>{{ userLevel['parameters'] }}</td>
+                                <td>{{ userLevel['score'] }}</td>
+                                <td>
+                                    {% if userLevel['time_taken'] == -1 %}
+                                        None
+                                    {% else %}
+                                        {% set minutes = userLevel['time_taken'] // 60 %}
+                                        {% set seconds = userLevel['time_taken'] % 60 %}
+                                        {% if minutes == 0 %}
+                                            0 min {{ seconds }} s
+                                        {% else %}
+                                            {{ minutes }} min {{ seconds }} s
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>{{ userLevel['status'] }}</td>
+                                <td>{{ userLevel['game_results'] }}</td>
+                                <td>{{ userLevel['observations'] }}</td>
+                                <td>{{ userLevel['progress_percent'] }}%</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>You have no levels yet.</p>
+            {% endif %}
+
+            <br>
+
+            <!-- Button to generate QR code -->
+            <button type="button" id="generateQRCodeBtn" class="qrcode_btn" data-user-id="{{ user['id'] }}">Generate QR Code</button>
+
+            <!-- Button to toggle QR Code visibility -->
+            <button type="button" id="toggleQRCodeBtn" class="qrcode_btn" onclick="toggleQRCodeVisibility()" style="display: none;">Hide QR Code</button>
+
+            <!-- Section where the QR code will appear -->
+            <div id="qrCodeContainer" style="display: none;">
+                <p>Your QR Code:</p>
+                <img id="qrCodeImage" src="" alt="QR Code">
+            </div>
+
+        {% endif %}  
+
+            <a class="a_link_blue_no_center" href="/logout">Logout</a>
+
+            <!-- Store userId as a data attribute -->
+            <div id="userData" data-user-id="{{ session['user_id'] }}"></div>
+
+            <!-- Load JS -->
+            <script src="{{ url_for('static', filename='functions.js') }}"></script>
+
+    </div>
+    
+</body>
+</html>

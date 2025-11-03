@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>View Physio</title>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="homepage_base">
+        
+        <h1>Physio Information</h1>
+
+        <p>This is the page of {{ physio.name }}.</p>
+
+        <p>Email: {{ physio.email }}</p>
+
+        {% if patients %}
+            <h2>Patient's List</h2>
+
+            <!-- Display all Patients for that physio -->
+            <table border="1" id="physiosAndPatients">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Weight (kg)</th>
+                        <th>Height (m)</th>
+                        <th>BMI</th>
+                        <th>BMI Class</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                        <tr>
+                            <td>{{ patient.name }}</td>
+                            <td>{{ patient.email }}</td>
+                            <td>{{ patient.weightX10 / 10 }}</td>
+                            <td>{{ "%.2f"|format(patient.heightX100 / 100) }}</td>
+                            <td>{{ patient.bmiX10 / 10 }}</td>
+                            <td>{{ patient.bmi_class }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> <br>
+        {% else %}
+            <br> <p>This physio currently has no patients assigned.</p>
+        {% endif %}
+
+        <a class="a_link_blue_no_center" href="/homepage">Back to Homepage</a>
+
+    </div>
+
+</body>
+</html>
