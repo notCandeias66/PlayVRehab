@@ -27,7 +27,7 @@ PlayVRehab is a Unity-based serious game developed as a Master's thesis project 
 
 ## About the Project
 
-Lower limb rehabilitation requires consistent, measurable, and engaging exercise routines. PlayVRehab addresses this by gamifying the rehabilitation process. In it, the patients play a game where the only controls are their own body movements, captured by an ** Azure Kinect** sensor.
+Lower limb rehabilitation requires consistent, measurable, and engaging exercise routines. PlayVRehab addresses this by gamifying the rehabilitation process. In it, the patients play a game where the only controls are their own body movements, captured by an **Azure Kinect** sensor.
 
 The system has three integrated components:
 
