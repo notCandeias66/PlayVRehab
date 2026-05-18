@@ -122,7 +122,7 @@ https://github.com/user-attachments/assets/8d9db103-f2b8-4047-abf5-e11db60bbffc
 
 This project was developed as part of a master’s dissertation and does not currently carry a formal open-source licence.
 
-> If you wish to use or adapt this work, please contact the author directly.
+If you wish to use or adapt this work, please contact the author directly.
 
 ---
 
